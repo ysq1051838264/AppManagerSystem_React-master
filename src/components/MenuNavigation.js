@@ -83,6 +83,12 @@ class MenuNavigation extends Component {
                             </NavLink>
                         </Menu.Item>
 
+                        <Menu.Item key="upload">
+                            <NavLink to={`${urlPath}/upload`}>
+                                <span>升级管理</span>
+                            </NavLink>
+                        </Menu.Item>
+
                     </SubMenu>
 
 
