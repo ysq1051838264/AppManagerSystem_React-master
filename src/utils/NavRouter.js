@@ -8,13 +8,15 @@ import ProjectListPage from '../pages/ProjectListPage';
 import AppPage from '../pages/AppPage';
 import ReleaseVersionPage from '../pages/ReleaseVersionPage';
 import DataStatisticsPage from '../pages/DataStatisticsPage';
+import UserManagePage from '../pages/UserManagePage';
+import VersionManage from '../pages/VersionManage';
 
 class NavRouter extends Component {
 
     /*判断页面是否存在*/
     _handleViewVisible = (page) => {
         return page === 'projectList' || page === 'android' || page === 'ios'
-            || page === 'releaseVersion' || page === 'dataStatistics';
+            || page === 'releaseVersion' || page === 'dataStatistics'||page ==='user'||page ==='upload';
     };
 
     /*返回对应的页面*/
@@ -27,6 +29,10 @@ class NavRouter extends Component {
             return <ReleaseVersionPage/>//版本发布
         } else if (page === 'dataStatistics') {
             return <DataStatisticsPage/>;//数据统计
+        } else if (page === 'user') {
+            return <UserManagePage/>;
+        } else if (page === 'upload') {
+            return <VersionManage/>;
         }
     };
 

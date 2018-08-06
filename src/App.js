@@ -5,6 +5,8 @@ import NavRouter from "./utils/NavRouter";
 import {Layout} from 'antd';
 import {Route} from "react-router-dom";
 
+import './css/Home.css';
+
 const {Header, Content, Footer, Sider} = Layout;
 
 
@@ -24,8 +26,8 @@ class App extends Component {
         console.log(this.props);
         const {match} = this.props;
         return (
-            <div className="App" >
-                <Layout>
+            <div className="Full" >
+                <Layout className ="Full">
                     <Sider
                         collapsible
                         trigger={null}
