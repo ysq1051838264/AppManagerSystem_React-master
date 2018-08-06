@@ -13,11 +13,11 @@ const SubMenu = Menu.SubMenu;
 class MenuNavigation extends Component {
 
     state = {
-        key:['1'],
+        key: ['1'],
     };
 
 
-    componentDidMount(){
+    componentDidMount() {
         let pathname = window.location.pathname;
         let key = pathname.split("/")[2];
         this.setState({
@@ -38,9 +38,10 @@ class MenuNavigation extends Component {
         return (
             <div>
                 <div className="logo">
-                    <h2 style={{color:'#fff'}}><img src={require('../images/icon.png')} alt="logo"/>App管理平台</h2>
+                    <h2 style={{color: '#fff'}}><img src={require('../images/icon.png')} alt="logo"/>App管理平台</h2>
                 </div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['dataStatistics']}  selectedKeys={this.state.key} onSelect={this._onKeySelected}
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['dataStatistics']} selectedKeys={this.state.key}
+                      onSelect={this._onKeySelected}
                       defaultOpenKeys={['systemsKey']}>
 
                     <Menu.Item key="dataStatistics">
@@ -74,6 +75,16 @@ class MenuNavigation extends Component {
                             </NavLink>
                         </Menu.Item>
                     </SubMenu>
+
+                    <SubMenu key="systemsKey" title={<span><Icon type="tablet"/><span>设置</span></span>}>
+                        <Menu.Item key="user">
+                            <NavLink to={`${urlPath}/user`}>
+                                <span>用户管理</span>
+                            </NavLink>
+                        </Menu.Item>
+
+                    </SubMenu>
+
 
                 </Menu>
             </div>
