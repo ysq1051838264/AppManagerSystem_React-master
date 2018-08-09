@@ -76,7 +76,7 @@ class MenuNavigation extends Component {
                         </Menu.Item>
                     </SubMenu>
 
-                    <SubMenu key="systemsKey" title={<span><Icon type="tablet"/><span>设置</span></span>}>
+                    <SubMenu  title={<span><Icon type="tablet"/><span>设置</span></span>}>
                         <Menu.Item key="user">
                             <NavLink to={`${urlPath}/user`}>
                                 <span>用户管理</span>

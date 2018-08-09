@@ -56,10 +56,10 @@ class VersionManage extends Component {
         }, {
             title: '添加',
             dataIndex: '添加',
-            render: () => (
-                <div>
-                    <Button type="primary">Primary</Button>
-                </div>),
+            // render: () => (
+            //     <div>
+            //         <Button type="primary">Primary</Button>
+            //     </div>),
         }];
 
         const data = [];
