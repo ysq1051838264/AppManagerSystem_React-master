@@ -16,7 +16,8 @@ class NavRouter extends Component {
     /*判断页面是否存在*/
     _handleViewVisible = (page) => {
         return page === 'projectList' || page === 'android' || page === 'ios'
-            || page === 'releaseVersion' || page === 'dataStatistics'||page ==='user'||page ==='upload';
+            || page === 'releaseVersion' || page === 'dataStatistics'||page ==='user'||page ==='upload'
+            ||page ==='device'||page ==='coach'||page ==='place';
     };
 
     /*返回对应的页面*/
@@ -32,6 +33,12 @@ class NavRouter extends Component {
         } else if (page === 'user') {
             return <UserManagePage/>;
         } else if (page === 'upload') {
+            return <VersionManage/>;
+        }else if (page === 'device') {
+            return <VersionManage/>;
+        }else if (page === 'coach') {
+            return <VersionManage/>;
+        }else if (page === 'place') {
             return <VersionManage/>;
         }
     };

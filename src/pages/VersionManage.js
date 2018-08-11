@@ -1,4 +1,5 @@
-import {Table, Icon, Divider, Button} from 'antd';
+import {Table, Icon, Divider, Button, Breadcrumb} from 'antd';
+import '../css/Home.css';
 import React, {Component} from 'react';
 
 
@@ -53,13 +54,6 @@ class VersionManage extends Component {
       <Divider type="vertical"/>
       <a href="javascript:;">删除</a>
     </span>),
-        }, {
-            title: '添加',
-            dataIndex: '添加',
-            // render: () => (
-            //     <div>
-            //         <Button type="primary">Primary</Button>
-            //     </div>),
         }];
 
         const data = [];
@@ -74,10 +68,22 @@ class VersionManage extends Component {
 
 
         return (
-            <Table columns={columns} dataSource={data}
-                   pagination={{  //分页
-                       pageSize: 15,  //显示几条一页
-                   }}/>
+            <div>
+                <div className = "ant-layout-breadcrumb">
+                    <Breadcrumb>
+                        <Breadcrumb.Item>设置</Breadcrumb.Item>
+                        <Breadcrumb.Item>升级管理</Breadcrumb.Item>
+                    </Breadcrumb>
+                </div>
+
+                <div className="item_row">
+                <Button className="ant-layout-end" type="primary">添加1</Button>
+                </div>
+                <Table columns={columns} dataSource={data}
+                       pagination={{  //分页
+                           pageSize: 15,  //显示几条一页
+                       }}/>
+            </div>
         )
 
     }

@@ -42,7 +42,7 @@ class MenuNavigation extends Component {
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['dataStatistics']} selectedKeys={this.state.key}
                       onSelect={this._onKeySelected}
-                      defaultOpenKeys={['systemsKey']}>
+                      defaultOpenKeys={['dataStatistics']}>
 
                     <Menu.Item key="dataStatistics">
                         <NavLink to={`${urlPath}/dataStatistics`}>
@@ -54,29 +54,50 @@ class MenuNavigation extends Component {
                     <Menu.Item key="projectList">
                         <NavLink to={`${urlPath}/projectList`}>
                             <Icon type="rocket"/>
-                            <span>项目管理</span>
+                            <span>广告</span>
                         </NavLink>
                     </Menu.Item>
 
-                    <SubMenu key="systemsKey" title={<span><Icon type="tablet"/><span>版本管理</span></span>}>
-                        <Menu.Item key="android">
-                            <NavLink to={`${urlPath}/android`}>
-                                <span>Android</span>
+                    {/*<SubMenu key="systemsKey" title={<span><Icon type="tablet"/><span>版本管理</span></span>}>*/}
+                        {/*<Menu.Item key="android">*/}
+                            {/*<NavLink to={`${urlPath}/android`}>*/}
+                                {/*<span>Android</span>*/}
+                            {/*</NavLink>*/}
+                        {/*</Menu.Item>*/}
+                        {/*<Menu.Item key="ios">*/}
+                            {/*<NavLink to={`${urlPath}/ios`}>*/}
+                                {/*<span>iOS</span>*/}
+                            {/*</NavLink>*/}
+                        {/*</Menu.Item>*/}
+                        {/*<Menu.Item key="releaseVersion" disabled={sessionStorage.getItem("userAuth") !== "1"}>*/}
+                            {/*<NavLink to={`${urlPath}/releaseVersion`}>*/}
+                                {/*<span>版本发布</span>*/}
+                            {/*</NavLink>*/}
+                        {/*</Menu.Item>*/}
+                    {/*</SubMenu>*/}
+
+                    <SubMenu  title={<span><Icon type="layout"/><span>管理</span></span>}>
+                        <Menu.Item key="coach">
+                            <NavLink to={`${urlPath}/coach`}>
+                                <span>教练管理</span>
                             </NavLink>
                         </Menu.Item>
-                        <Menu.Item key="ios">
-                            <NavLink to={`${urlPath}/ios`}>
-                                <span>iOS</span>
+
+                        <Menu.Item key="device">
+                            <NavLink to={`${urlPath}/device`}>
+                                <span>设备管理</span>
                             </NavLink>
                         </Menu.Item>
-                        <Menu.Item key="releaseVersion" disabled={sessionStorage.getItem("userAuth") !== "1"}>
-                            <NavLink to={`${urlPath}/releaseVersion`}>
-                                <span>版本发布</span>
+
+                        <Menu.Item key="place">
+                            <NavLink to={`${urlPath}/place`}>
+                                <span>场地管理</span>
                             </NavLink>
                         </Menu.Item>
+
                     </SubMenu>
 
-                    <SubMenu  title={<span><Icon type="tablet"/><span>设置</span></span>}>
+                    <SubMenu  title={<span><Icon type="setting"/><span>设置</span></span>}>
                         <Menu.Item key="user">
                             <NavLink to={`${urlPath}/user`}>
                                 <span>用户管理</span>
@@ -90,7 +111,6 @@ class MenuNavigation extends Component {
                         </Menu.Item>
 
                     </SubMenu>
-
 
                 </Menu>
             </div>
