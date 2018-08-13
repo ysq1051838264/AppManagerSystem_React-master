@@ -2,9 +2,11 @@
  * 网络请求URL
  * Created by panyz on 2018/6/8.
  */
-const BASE_URL = "your server name and port";
+const BASE_URL = "http://192.168.43.25:8080/";
 
-export const LOGIN = BASE_URL + "userAction/login";//登录接口
+export const LOGIN = BASE_URL + "fifo/admin/sign";//登录接口
+
+export const ADD_MANAGER = BASE_URL + "fifo/admin/managers";//添加管理员
 
 export const GET_ALL_PROJECT = BASE_URL + "projectList/getAllProject";//获取项目接口
 

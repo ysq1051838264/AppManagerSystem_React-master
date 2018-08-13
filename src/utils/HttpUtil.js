@@ -11,25 +11,34 @@ import 'whatwg-fetch';
  * @param method
  * @param body
  */
-export default function httpRequest(url, method, body) {
+export default function httpRequest(url, method, p) {
     method = method.toUpperCase();
+    var body = JSON.stringify(p);
+
     if (method === 'GET') {
         body = undefined;
     }
 
+    var token = localStorage.getItem("token");
+
+    console.log("阳书权请求参数：", body);
+
     return fetch(url, {
         method: method,
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/json',
+
             'Accept': 'application/json;charset=utf-8'
         },
         body: body
     })
         .then(
             (res) => {
-                if (res.status >= 200 && res.status < 300) {
+                if (res.status >= 200 && res.status < 400) {
                     return res;
-                } else {
+                }else if(res.status =100010){
+                    console.log("登录失效，重新登录：");
+                }else {
                     return Promise.reject('请求失败');
                 }
             }

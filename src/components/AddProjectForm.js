@@ -1,6 +1,6 @@
 /**
  * 添加项目组件
- * Created by panyz on 2018/6/12.
+ * Created by yangshuquan on 2018/8/12.
  */
 import React, {Component} from 'react';
 import {Modal, Form, Input} from 'antd';
@@ -8,6 +8,7 @@ import {Modal, Form, Input} from 'antd';
 const FormItem = Form.Item;
 
 class AddProjectForm extends Component {
+
     render() {
         const {visible, onCancel, onCreate, form} = this.props;
         const {getFieldDecorator} = form;
@@ -25,8 +26,9 @@ class AddProjectForm extends Component {
                         {getFieldDecorator('projectName', {
                             rules: [{
                                 required: true,
-                                message: '请输入项目名称'
-                            }]
+                                message: '请输入项目名称',
+                            }],
+                            initialValue: "hhhh"
                         })(
                             <Input/>
                         )}
@@ -57,6 +59,7 @@ class AddProjectForm extends Component {
             </Modal>
         );
     }
+
 }
 
 const createProjectForm = Form.create()(AddProjectForm);

@@ -35,36 +35,48 @@ class Login extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                let params = new Map();
-                params.set("account", values.account);
-                params.set("pwd", Encrypt(values.password));
+                // let params = new Map();
+                // params.set("account", values.account);
+                // params.set("password", values.password);
 
-                sessionStorage.setItem("isAuth", true);
-                sessionStorage.setItem("account", values.account);
-                sessionStorage.setItem("userAuth", "1111");
-                this.props.history.push("/home/dataStatistics");
+                // sessionStorage.setItem("isAuth", true);
+                // sessionStorage.setItem("account", values.account);
+                // sessionStorage.setItem("userAuth", "1111");
+                // this.props.history.push("/home/dataStatistics");
 
-                // doPost(url_login, requestParams(params))
-                //     .then(
-                //         res => res.json()
-                //     )
-                //     .then(json => {
-                //         if (json.code !== 1) {
-                //             this.setState({
-                //                 visible: true,
-                //                 loading: false,
-                //                 errorMessage: json.msg
-                //             })
-                //         } else {
-                //             this._handleRememberPwd(values);
-                //             sessionStorage.setItem("isAuth", true);
-                //             sessionStorage.setItem("account", json.data.account);
-                //             sessionStorage.setItem("userAuth", json.data.userAuth);
-                //             this.props.history.push("/home/dataStatistics");
-                //         }
-                //         console.log(json);
-                //     })
-                //     .catch(err => console.warn(err));
+                let p = {};
+                p.account = values.account;
+                p.password = values.password;
+
+                doPost(url_login, p)
+                    .then(
+                        res => res.json()
+                    )
+                    .then(json => {
+                        // if (json.code !== 1) {
+                        //     this.setState({
+                        //         visible: true,
+                        //         loading: false,
+                        //         errorMessage: json.msg
+                        //     })
+                        // } else {
+                            this._handleRememberPwd(values);
+                             localStorage.setItem("token", json.token);
+
+                            sessionStorage.setItem("isAuth", true);
+                            sessionStorage.setItem("account", values.account);
+                            sessionStorage.setItem("userAuth", "1111");
+                            this.props.history.push("/home/dataStatistics");
+                        // }
+                        console.log(json);
+                    }).catch(err => {
+                        console.warn(err)
+                        this.setState({
+                            visible: true,
+                            loading: false,
+                            errorMessage: "请求失败，请检查账号和密码是否输入正确"
+                        })
+                    });
             }
         })
     };
@@ -88,6 +100,27 @@ class Login extends Component {
         }
     };
 
+    // 验证用户名
+    checkUsername = (rule, value, callback) => {
+        const form = this.props.form;
+        if (!value) {
+            callback("请输入账号");
+            this.setState({
+                loading: false,
+            })
+        } else {
+            callback();
+        }
+    }
+    // 验证密码
+    checkPassword = (rule, value, callback) => {
+        const form = this.props.form;
+        // if (value && this.state.passwordDirty) {
+        //     form.validateFields(['confirm'], { force: true });
+        // }
+        callback();
+    }
+
     render() {
         const {getFieldDecorator} = this.props.form;
         return (
@@ -98,8 +131,8 @@ class Login extends Component {
                         <Alert
                             className="alert"
                             closable
-                            message={this.state.errorMessage}
-                            showIcon
+                            message="温馨提示"
+                            description={this.state.errorMessage}
                             type="error"
                             afterClose={() => this.setState({visible: false})}/>
                     ) : null}
@@ -131,7 +164,7 @@ class Login extends Component {
                                 initialValue: this._initLoginInfo(localStorage.getItem("password")),
                                 rules: [{
                                     required: true,
-                                    message: '请输入密码！'
+                                    message: '请输入密码！',
                                 }]
                             })(
                                 <Input
@@ -153,7 +186,7 @@ class Login extends Component {
                             <Button size="large"
                                     className="btn-login"
                                     loading={this.state.loading}
-                                    onClick={() => this.setState({loading: true})}
+                                    // onClick={() => this.setState({loading: true})}
                                     htmlType='submit'
                                     type="primary"
                             >登录</Button>

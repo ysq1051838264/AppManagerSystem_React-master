@@ -27,5 +27,8 @@ item_row{
     display: flex;
     flex-direction: row;
     margin-right: 80px;
+}
 
+column-center{
+    text-align: center !important;
 }
