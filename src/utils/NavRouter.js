@@ -10,6 +10,8 @@ import ReleaseVersionPage from '../pages/ReleaseVersionPage';
 import DataStatisticsPage from '../pages/DataStatisticsPage';
 import UserManagePage from '../pages/UserManagePage';
 import VersionManage from '../pages/VersionManage';
+import CoachManage from "../pages/CoachManage";
+import DeviceManage from "../pages/DeviceManage";
 
 class NavRouter extends Component {
 
@@ -35,9 +37,9 @@ class NavRouter extends Component {
         } else if (page === 'upload') {
             return <VersionManage/>;
         }else if (page === 'device') {
-            return <VersionManage/>;
+            return <DeviceManage/>;
         }else if (page === 'coach') {
-            return <VersionManage/>;
+            return <CoachManage/>;
         }else if (page === 'place') {
             return <VersionManage/>;
         }

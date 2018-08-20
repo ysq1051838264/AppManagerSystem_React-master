@@ -1,31 +1,13 @@
 import {Table, Icon, Divider, message, Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
-import AddProjectForm from "../components/AddProjectForm";
+import AddCoach from "../components/AddCoach";
 import {doPost} from '../utils/HttpUtil';
 import {ADD_MANAGER} from '../utils/URL';
-
-// const data = [{
-//     key: '1',
-//     name: 'John Brown',
-//     age: 32,
-//     address: 'New York No. 1 Lake Park',
-// }, {
-//     key: '2',
-//     name: 'Jim Green',
-//     age: 42,
-//     address: 'London No. 1 Lake Park',
-// }, {
-//     key: '3',
-//     name: 'Joe Black',
-//     age: 32,
-//     address: 'Sidney No. 1 Lake Park',
-// }];
-
 /***
- * 版本管理
+ * 教练管理
  */
-class VersionManage extends Component {
+class CoachManage extends Component {
 
     state = {
         visible: false,
@@ -53,42 +35,28 @@ class VersionManage extends Component {
         })
     };
 
-    /*添加项目处理*/
+    /*添加教练*/
     _handleCreate = () => {
         const form = this.formRef.props.form;
         form.validateFields((err, values) => {
             if (!err) {
-                // let params = new Map();
-                // params.set("projectName", values.projectName);
-                // params.set("projectCode", values.projectCode);
-                // params.set("projectDes", values.projectDes);
-
                 let p = {};
                 p.account = values.projectName;
                 p.password = values.projectCode;
                 p.username = values.projectDes;
 
-                doPost(ADD_MANAGER, p)
-                    .then(res => {
-                        message.success("添加成功");
-                        form.resetFields();
-                        this.setState({
-                            visible: false,
-                        });
-                    })
-                    // .then(json => {
-                    //     message.success("添加成功");
-                    //     // this.props.onSuccess();
-                    //
-                    //     form.resetFields();
-                    //     this.setState({
-                    //         visible: false,
-                    //     });
-                    // })
-                    .catch(err => {
-                        console.error(err)
-                        message.error("添加失败")
-                    })
+                // doPost(ADD_MANAGER, p)
+                //     .then(res => {
+                //         message.success("添加成功");
+                //         form.resetFields();
+                //         this.setState({
+                //             visible: false,
+                //         });
+                //     })
+                //     .catch(err => {
+                //         console.error(err)
+                //         message.error("添加失败")
+                //     })
             }
         });
     };
@@ -97,21 +65,28 @@ class VersionManage extends Component {
         let self = this;
 
         const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            className: 'column-center',
+            title: '序号',
+            dataIndex: 'id',
+            key: 'id',
+        }, {
+            title: '手机',
+            dataIndex: 'phone',
+            key: 'phone',
             render: text => <a href="javascript:;">{text}</a>,
         }, {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        }, {
-            title: 'Address',
-            dataIndex: 'address',
+            title: '密码',
+            dataIndex: 'pwd',
             className: 'column-center',
-            key: 'address',
+            key: 'pwd',
         }, {
+            title: '昵称',
+            dataIndex: 'nick_name',
+            key: 'nick_name',
+        } , {
+            title: '注册时间',
+            dataIndex: 'time',
+            key: 'time',
+        },{
             title: '操作',
             key: 'action',
             render: (text, record) => (<span>
@@ -126,10 +101,11 @@ class VersionManage extends Component {
         const data = [];
         for (let i = 0; i < 46; i++) {
             data.push({
-                key: i,
-                name: `Edward King ${i}`,
-                age: 32,
-                address: `London, Park Lane no. ${i}`,
+                id: i,
+                phone:188832806+i,
+                nick_name: `Edward King ${i}`,
+                pwd: 32,
+                time: `2018-7-. ${i}`,
             });
         }
 
@@ -138,16 +114,16 @@ class VersionManage extends Component {
             <div>
                 <div className="ant-layout-breadcrumb">
                     <Breadcrumb>
-                        <Breadcrumb.Item>设置</Breadcrumb.Item>
-                        <Breadcrumb.Item>升级管理</Breadcrumb.Item>
+                        <Breadcrumb.Item>管理</Breadcrumb.Item>
+                        <Breadcrumb.Item>教练管理</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
 
-                <Card title="升级记录"
+                <Card title="超级管理员列表"
                       extra={<Button className="ant-layout-end" type="primary" onClick={this._showModal}>添加</Button>}
                       bordered={false}>
 
-                    <AddProjectForm
+                    <AddCoach
                         wrappedComponentRef={this._saveFormRef}
                         visible={this.state.visible}
                         onCancel={this._handleCancel}
@@ -165,4 +141,4 @@ class VersionManage extends Component {
     }
 }
 
-export default VersionManage;
+export default CoachManage;
