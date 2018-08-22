@@ -39,7 +39,7 @@ class Login extends Component {
                 sessionStorage.setItem("isAuth", true);
                 sessionStorage.setItem("account", values.account);
                 sessionStorage.setItem("userAuth", "1111");
-                this.props.history.push("/home/dataStatistics");
+                this.props.history.push("/home/ad");
 
                 // let p = {};
                 // p.account = values.account;

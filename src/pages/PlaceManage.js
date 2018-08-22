@@ -5,9 +5,9 @@ import AddDevice from "../components/AddDevice";
 import {doPost} from '../utils/HttpUtil';
 import {ADD_MANAGER} from '../utils/URL';
 /***
- * 设备管理
+ * 场地管理
  */
-class DeviceManage extends Component {
+class PlaceManage extends Component {
 
     state = {
         visible: false,
@@ -141,4 +141,4 @@ class DeviceManage extends Component {
     }
 }
 
-export default DeviceManage;
+export default PlaceManage;

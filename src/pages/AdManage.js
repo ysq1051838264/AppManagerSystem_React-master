@@ -1,31 +1,31 @@
 import {Table, Icon, Divider, message, Popconfirm, Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
-import AddCoach from "../components/AddCoach";
-import EditCoach from "../components/EditCoach";
+import AddAd from "../components/AddAd";
+import EditAd from "../components/EditAd";
 
 import {doPost, requestParams} from '../utils/HttpUtil';
 import {ADD_MANAGER, DELETE_PROJECT, UPDATE_PROJECT} from '../utils/URL';
 
 /***
- * 教练管理
+ * 广告轮播图片管理
  */
-class CoachManage extends Component {
+class AdManage extends Component {
 
     state = {
         visible: false,
         editVisible: false,
-        item:null,
+        item: null,
     };
 
 
     showCurRowMessage(item) {
         this.setState({
             editVisible: true,
-            item:item,
+            item: item,
         })
 
-        console.log("打印---",this.state.item)
+        console.log("打印---", this.state.item)
         // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
     }
 
@@ -61,7 +61,7 @@ class CoachManage extends Component {
         this.editFormRef.props.form.resetFields();
         this.setState({
             editVisible: false,
-           // loading: false
+            // loading: false
         })
     };
 
@@ -77,7 +77,7 @@ class CoachManage extends Component {
                 params.set("projectCode", values.projectCode);
                 params.set("projectDes", values.projectDes);
 
-                console.log("打印请求参数：",params)
+                console.log("打印请求参数：", params)
                 // doPost(UPDATE_PROJECT, requestParams(params))
                 //     .then(res => res.json())
                 //     .then(json => {
@@ -132,21 +132,21 @@ class CoachManage extends Component {
             dataIndex: 'id',
             key: 'id',
         }, {
-            title: '手机',
+            title: '图片地址',
             dataIndex: 'phone',
             key: 'phone',
             render: text => <a href="javascript:;">{text}</a>,
         }, {
-            title: '密码',
+            title: '图片URL地址',
             dataIndex: 'pwd',
             className: 'column-center',
             key: 'pwd',
         }, {
-            title: '昵称',
+            title: '图片类型',
             dataIndex: 'nick_name',
             key: 'nick_name',
         }, {
-            title: '注册时间',
+            title: '上传时间',
             dataIndex: 'time',
             key: 'time',
         }, {
@@ -180,16 +180,15 @@ class CoachManage extends Component {
             <div>
                 <div className="ant-layout-breadcrumb">
                     <Breadcrumb>
-                        <Breadcrumb.Item>管理</Breadcrumb.Item>
-                        <Breadcrumb.Item>教练管理</Breadcrumb.Item>
+                        <Breadcrumb.Item>广告管理</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
 
-                <Card title="超级管理员列表"
+                <Card title="广告轮播图列表"
                       extra={<Button className="ant-layout-end" type="primary" onClick={this._showModal}>添加</Button>}
                       bordered={false}>
 
-                    <AddCoach
+                    <AddAd
                         wrappedComponentRef={this._saveFormRef}
                         visible={this.state.visible}
                         onCancel={this._handleCancel}
@@ -201,7 +200,7 @@ class CoachManage extends Component {
                            }}/>
                 </Card>
 
-                <EditCoach
+                <EditAd
                     wrappedComponentRef={this._saveEditFormRef}
                     visible={this.state.editVisible}
                     item={this.state.item}
@@ -214,4 +213,4 @@ class CoachManage extends Component {
     }
 }
 
-export default CoachManage;
+export default AdManage;

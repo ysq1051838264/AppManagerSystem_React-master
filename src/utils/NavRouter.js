@@ -12,14 +12,15 @@ import UserManagePage from '../pages/UserManagePage';
 import VersionManage from '../pages/VersionManage';
 import CoachManage from "../pages/CoachManage";
 import DeviceManage from "../pages/DeviceManage";
+import AdManage from "../pages/AdManage";
 
 class NavRouter extends Component {
 
     /*判断页面是否存在*/
     _handleViewVisible = (page) => {
         return page === 'projectList' || page === 'android' || page === 'ios'
-            || page === 'releaseVersion' || page === 'dataStatistics'||page ==='user'||page ==='upload'
-            ||page ==='device'||page ==='coach'||page ==='place';
+            || page === 'releaseVersion' || page === 'dataStatistics' || page === 'user' || page === 'upload'
+            || page === 'device' || page === 'coach' || page === 'place' || page === 'ad';
     };
 
     /*返回对应的页面*/
@@ -36,12 +37,14 @@ class NavRouter extends Component {
             return <UserManagePage/>;
         } else if (page === 'upload') {
             return <VersionManage/>;
-        }else if (page === 'device') {
+        } else if (page === 'device') {
             return <DeviceManage/>;
-        }else if (page === 'coach') {
+        } else if (page === 'coach') {
             return <CoachManage/>;
-        }else if (page === 'place') {
+        } else if (page === 'place') {
             return <VersionManage/>;
+        } else if (page === 'ad') {
+            return <AdManage/>;
         }
     };
 

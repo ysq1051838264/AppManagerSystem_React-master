@@ -40,19 +40,19 @@ class MenuNavigation extends Component {
                 <div className="logo">
                     <h2 style={{color: '#fff'}}><img src={require('../images/icon.png')} alt="logo"/>App管理平台</h2>
                 </div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['dataStatistics']} selectedKeys={this.state.key}
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['ad']} selectedKeys={this.state.key}
                       onSelect={this._onKeySelected}
-                      defaultOpenKeys={['dataStatistics']}>
+                      defaultOpenKeys={['ad']}>
 
-                    <Menu.Item key="dataStatistics">
-                        <NavLink to={`${urlPath}/dataStatistics`}>
-                            <Icon type="bar-chart"/>
-                            <span>数据统计</span>
-                        </NavLink>
-                    </Menu.Item>
+                    {/*<Menu.Item key="dataStatistics">*/}
+                        {/*<NavLink to={`${urlPath}/dataStatistics`}>*/}
+                            {/*<Icon type="bar-chart"/>*/}
+                            {/*<span>数据统计</span>*/}
+                        {/*</NavLink>*/}
+                    {/*</Menu.Item>*/}
 
-                    <Menu.Item key="projectList">
-                        <NavLink to={`${urlPath}/projectList`}>
+                    <Menu.Item key="ad">
+                        <NavLink to={`${urlPath}/ad`}>
                             <Icon type="rocket"/>
                             <span>广告</span>
                         </NavLink>
