@@ -1,27 +1,41 @@
-import {Table, Icon, Divider, message, Button, Card, Breadcrumb} from 'antd';
+import {Table, Icon, Divider, message, Popconfirm,Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
 import AddDevice from "../components/AddDevice";
+import EditDevice from "../components/EditDevice";
 import {doPost} from '../utils/HttpUtil';
 import {ADD_MANAGER} from '../utils/URL';
+
 /***
  * 设备管理
  */
 class DeviceManage extends Component {
-
-    state = {
-        visible: false,
-    };
-
-    showCurRowMessage(record) {
-        alert("key:" + record.key + " name:" + record.name + " age:" + record.age + " address:" + record.address);
+  // 构造
+    constructor(props) {
+      super(props);
+      // 初始状态
+      this.state = {
+          visible: false,
+          editVisible: false,
+          item: null,
+      };
     }
 
-    /*弹出对话框*/
-    _showModal = () => {
+    componentWillMount() {
+        //初始化data
+    }
+
+    showCurRowMessage(item) {
         this.setState({
-            visible: true
-        })
+            editVisible: true,
+            item: item,
+        });
+
+        console.log("打印---", this.state.item)
+    }
+
+    deleteItem = (item) => {
+        // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
     };
 
     _saveFormRef = (formRef) => {
@@ -33,6 +47,52 @@ class DeviceManage extends Component {
         this.setState({
             visible: false,
         })
+    };
+
+    _saveEditFormRef = (formRef) => {
+        this.editFormRef = formRef;
+    };
+
+    /*编辑完成后的处理*/
+    _handleEditCancel = () => {
+        this.editFormRef.props.form.resetFields();
+        this.setState({
+            editVisible: false,
+            // loading: false
+        })
+    };
+
+    /*编辑处理*/
+    _handleEdit = () => {
+        // this.setState({loading: true});
+        const form = this.editFormRef.props.form;
+        form.validateFields((err, values) => {
+            if (!err) {
+                let params = new Map();
+                params.set("projectId", this.state.item.id);
+                params.set("projectName", values.projectName);
+                params.set("projectCode", values.projectCode);
+                params.set("projectDes", values.projectDes);
+
+                console.log("打印请求参数：", params)
+                // doPost(UPDATE_PROJECT, requestParams(params))
+                //     .then(res => res.json())
+                //     .then(json => {
+                //         if (json.code === 1) {
+                //             message.success(json.msg);
+                //             this._loadProjectListData();
+                //         } else {
+                //             message.error(json.msg);
+                //         }
+                //         form.resetFields();
+                //         this.setState({
+                //             visible: false,
+                //         })
+                //     })
+                //     .catch(err => console.error(err));
+            }
+        });
+        form.resetFields();
     };
 
     /*添加教练*/
@@ -70,41 +130,44 @@ class DeviceManage extends Component {
             key: 'id',
         }, {
             title: '设备编号',
-            dataIndex: 'phone',
-            key: 'phone',
+            dataIndex: 'equip_no',
+            key: 'equip_no',
             render: text => <a href="javascript:;">{text}</a>,
         }, {
             title: '设备名称',
-            dataIndex: 'pwd',
+            dataIndex: 'equip_name',
             className: 'column-center',
-            key: 'pwd',
+            key: 'equip_name',
         }, {
             title: '手环个数',
-            dataIndex: 'nick_name',
-            key: 'nick_name',
-        } , {
+            dataIndex: 'num',
+            key: 'num',
+        }, {
             title: '注册时间',
             dataIndex: 'time',
             key: 'time',
-        },{
+        }, {
             title: '操作',
             key: 'action',
-            render: (text, record) => (<span>
-      <a href="javascript:;" onClick={function () {
-          self.showCurRowMessage(record)
-      }}>查看</a>
+            render: (text, item) => (<span>
+        <a href="javascript:;" onClick={function () {
+            self.showCurRowMessage(item)
+        }}>查看</a>
       <Divider type="vertical"/>
-      <a href="javascript:;">删除</a>
+                 <Popconfirm placement="left" title="确定要删除该设备么?" okText="确定" cancelText="取消" onConfirm={() => {
+                     this.deleteItem(item)
+                 }}>
+                 <a>删除</a></Popconfirm>
     </span>),
         }];
 
         const data = [];
-        for (let i = 0; i < 46; i++) {
+        for (let i = 0; i < 10; i++) {
             data.push({
                 id: i,
-                phone:188832806+i,
-                nick_name: `Edward King ${i}`,
-                pwd: 32,
+                equip_no: 188832806 + i,
+                equip_name: `设备名 ${i}`,
+                num:i ,
                 time: `2018-7-. ${i}`,
             });
         }
@@ -135,6 +198,16 @@ class DeviceManage extends Component {
                                pageSize: 15,  //显示几条一页
                            }}/>
                 </Card>
+
+                <EditDevice
+                    wrappedComponentRef={this._saveEditFormRef}
+                    visible={this.state.editVisible}
+                    item={this.state.item}
+                    onCancel={this._handleEditCancel}
+                    onCreate={this._handleEdit}
+                />
+
+
             </div>
         )
 

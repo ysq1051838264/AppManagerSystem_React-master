@@ -37,7 +37,7 @@ class AdManage extends Component {
     };
 
     deleteItem = (item) => {
-        alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
+        // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
 
     };
 
@@ -108,6 +108,8 @@ class AdManage extends Component {
                 p.password = values.projectCode;
                 p.username = values.projectDes;
 
+                console.log("ysq打印-", p)
+
                 // doPost(ADD_MANAGER, p)
                 //     .then(res => {
                 //         message.success("添加成功");
@@ -128,23 +130,22 @@ class AdManage extends Component {
         let self = this;
 
         const columns = [{
-            title: '序号',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id',
         }, {
-            title: '图片地址',
-            dataIndex: 'phone',
-            key: 'phone',
+            title: '图片URL地址',
+            dataIndex: 'pic_url',
+            key: 'pic_url',
             render: text => <a href="javascript:;">{text}</a>,
         }, {
-            title: '图片URL地址',
-            dataIndex: 'pwd',
-            className: 'column-center',
-            key: 'pwd',
+            title: '图片链接',
+            dataIndex: 'address',
+            key: 'address',
         }, {
             title: '图片类型',
-            dataIndex: 'nick_name',
-            key: 'nick_name',
+            dataIndex: 'type',
+            key: 'type',
         }, {
             title: '上传时间',
             dataIndex: 'time',
@@ -168,9 +169,9 @@ class AdManage extends Component {
         for (let i = 0; i < 5; i++) {
             data.push({
                 id: i,
-                phone: 'http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg',
-                nick_name: `Edward King ${i}`,
-                pwd: 32,
+                pic_url: 'http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg',
+                address: 'https://www.baidu.com',
+                type: '小程序',
                 time: `2018-7-. ${i}`,
             });
         }

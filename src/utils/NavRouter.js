@@ -13,6 +13,7 @@ import VersionManage from '../pages/VersionManage';
 import CoachManage from "../pages/CoachManage";
 import DeviceManage from "../pages/DeviceManage";
 import AdManage from "../pages/AdManage";
+import PlaceManage from "../pages/PlaceManage";
 
 class NavRouter extends Component {
 
@@ -42,7 +43,7 @@ class NavRouter extends Component {
         } else if (page === 'coach') {
             return <CoachManage/>;
         } else if (page === 'place') {
-            return <VersionManage/>;
+            return <PlaceManage/>;
         } else if (page === 'ad') {
             return <AdManage/>;
         }
