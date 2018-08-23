@@ -38,7 +38,7 @@ class MenuNavigation extends Component {
         return (
             <div>
                 <div className="logo">
-                    <h2 style={{color: '#fff'}}><img src={require('../images/icon.png')} alt="logo"/>App管理平台</h2>
+                    <h2 style={{color: '#fff'}}><img src={require('../images/icon.png')} alt="logo"/>FiFo管理平台</h2>
                 </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['ad']} selectedKeys={this.state.key}
                       onSelect={this._onKeySelected}

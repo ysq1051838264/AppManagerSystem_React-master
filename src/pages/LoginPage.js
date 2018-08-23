@@ -35,7 +35,7 @@ class Login extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-
+                this._handleRememberPwd(values);
                 sessionStorage.setItem("isAuth", true);
                 sessionStorage.setItem("account", values.account);
                 sessionStorage.setItem("userAuth", "1111");
@@ -128,7 +128,7 @@ class Login extends Component {
                 </div>
 
                 <div className="content">
-                    <h1 style={{color: '#000', marginTop: 5}}><img src={require('../images/icon.png')} alt="logo"/>App管理平台
+                    <h1 style={{color: '#000', marginTop: 5}}><img src={require('../images/icon.png')} alt="logo"/>FiFo管理平台
                     </h1>
                     <Form onSubmit={this._hanldSubmit} className="login-form">
                         <FormItem>
@@ -184,7 +184,7 @@ class Login extends Component {
                 </div>
 
                 <div className="footer">
-                    <span> Copyright©2018 panyz</span>
+                    <span> Copyright©2018  上海崇生体育发展有限公司</span>
                 </div>
 
             </div>

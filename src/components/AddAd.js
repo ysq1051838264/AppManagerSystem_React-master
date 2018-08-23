@@ -19,10 +19,10 @@ class AddAd extends Component {
                 onCancel={onCancel}
                 okText="添加"
                 cancelText="取消"
-                title="添加超级管理员">
+                title="添加轮播图">
 
                 <Form>
-                    <FormItem label="手机号码">
+                    <FormItem label="图片地址">
                         {getFieldDecorator('projectName', {
                             rules: [{
                                 required: true,
@@ -34,7 +34,7 @@ class AddAd extends Component {
                         )}
                     </FormItem>
 
-                    <FormItem label="密码">
+                    <FormItem label="图片点击链接">
                         {getFieldDecorator('projectCode', {
                             rules: [{
                                 required: true,
@@ -45,7 +45,7 @@ class AddAd extends Component {
                         )}
                     </FormItem>
 
-                    <FormItem label="昵称">
+                    <FormItem label="图片类型">
                         {getFieldDecorator('projectDes', {
                             rules: [{
                                 required: true,
@@ -55,6 +55,8 @@ class AddAd extends Component {
                             <Input/>
                         )}
                     </FormItem>
+
+
                 </Form>
             </Modal>
         );

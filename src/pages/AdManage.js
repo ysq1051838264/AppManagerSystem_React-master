@@ -157,7 +157,7 @@ class AdManage extends Component {
           self.showCurRowMessage(item)
       }}>查看</a>
       <Divider type="vertical"/>
-                 <Popconfirm placement="left" title="确定要删除该教练员么?" okText="确定" cancelText="取消" onConfirm={() => {
+                 <Popconfirm placement="left" title="确定要删除该图片么?" okText="确定" cancelText="取消" onConfirm={() => {
                      this.deleteItem(item)
                  }}>
                  <a>删除</a></Popconfirm>
@@ -165,10 +165,10 @@ class AdManage extends Component {
         }];
 
         const data = [];
-        for (let i = 0; i < 46; i++) {
+        for (let i = 0; i < 5; i++) {
             data.push({
                 id: i,
-                phone: 188832806 + i,
+                phone: 'http://p14.go007.com/2014_11_02_05/a03541088cce31b8_1.jpg',
                 nick_name: `Edward King ${i}`,
                 pwd: 32,
                 time: `2018-7-. ${i}`,
