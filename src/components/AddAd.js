@@ -51,9 +51,10 @@ class AddAd extends Component {
                 <Form>
 
                     <FormItem label="图片">
-                        {getFieldDecorator('appIcon', {
+                        {getFieldDecorator('projectCode', {
                             rules: [{
-                                required: false,
+                                required: true,
+                                message: '请上传图片',
                             }]
                         })(
                             <div>

@@ -18,30 +18,6 @@ class EditDevice extends Component {
         if(item ===null)
             return (<div></div>);
 
-        console.log("打印数据---",item)
-        const props = {
-            name: 'icon',
-            data: {
-                projectCode: item.phone,
-            },
-            action: UPLOAD_ICON,
-            headers: {
-                'Access-Control-Allow-Headers': "x-requested-with",
-                authorization: 'authorization-text'
-            },
-            onChange(info) {
-                if (info.file.status !== 'uploading') {
-
-                }
-                if (info.file.status === 'done') {
-                    message.success(`${info.file.name} 上传成功.`);
-                } else if (info.file.status === 'error') {
-                    message.error(`${info.file.name} 上传失败.`);
-                }
-            },
-        };
-
-
         return (
             <Modal
                 visible={visible}
@@ -49,61 +25,45 @@ class EditDevice extends Component {
                 onOk={onCreate}
                 okText="提交"
                 cancelText="取消"
-                title="编辑项目">
+                title="编辑设备">
 
                 <Form>
-                    <FormItem label="手机号">
+                    <FormItem label="设备编号">
                         {getFieldDecorator('projectName', {
-                            initialValue: item.phone,
+                            initialValue: item.equip_no,
                             rules: [{
                                 required: true,
-                                message: '请输入手机号'
+                                message: '请输入设备编号'
                             }]
                         })(
                             <Input/>
                         )}
                     </FormItem>
 
-                    <FormItem label="密码">
+                    <FormItem label="设备名称">
                         {getFieldDecorator('projectCode', {
-                            initialValue: item.pwd,
+                            initialValue: item.equip_name,
                             rules: [{
                                 required: true,
-                                message: '请输入密码'
+                                message: '请输入设备名称'
                             }]
                         })(
                             <Input />
                         )}
                     </FormItem>
 
-                    <FormItem label="昵称">
+                    <FormItem label="手环个数">
                         {getFieldDecorator('projectDes', {
-                            initialValue: item.nick_name,
+                            initialValue: item.num,
                             rules: [{
                                 required: true,
-                                message: '请输入昵称'
+                                message: '请输入手环个数'
                             }]
                         })(
                             <Input/>
                         )}
                     </FormItem>
 
-                    <FormItem label="项目图标">
-                        {getFieldDecorator('appIcon', {
-                            rules: [{
-                                required: false,
-                            }]
-                        })(
-                            <div>
-                                <Upload {...props}>
-                                    <Button>
-                                        <Icon type="upload"/> 上传图标
-                                    </Button>
-                                </Upload>
-                                <span style={{color:'red'}}>*图标的大小为48x48</span>
-                            </div>
-                        )}
-                    </FormItem>
 
                 </Form>
             </Modal>

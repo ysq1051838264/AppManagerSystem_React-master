@@ -1,7 +1,7 @@
 import {Table, Icon, Divider, message,Popconfirm, Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
-import AddDevice from "../components/AddDevice";
+import AddPlace from "../components/AddPlace";
 import EditPlace from "../components/EditPlace";
 import {doPost} from '../utils/HttpUtil';
 import {ADD_MANAGER} from '../utils/URL';
@@ -35,8 +35,14 @@ class PlaceManage extends Component {
         console.log("打印---",this.state.item)
     }
 
+    _showModal = () => {
+        this.setState({
+            visible: true
+        })
+    };
+
     deleteItem = (item) => {
-        alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
+        // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
     };
 
     _saveFormRef = (formRef) => {
@@ -193,7 +199,7 @@ class PlaceManage extends Component {
                       extra={<Button className="ant-layout-end" type="primary" onClick={this._showModal}>添加</Button>}
                       bordered={false}>
 
-                    <AddDevice
+                    <AddPlace
                         wrappedComponentRef={this._saveFormRef}
                         visible={this.state.visible}
                         onCancel={this._handleCancel}

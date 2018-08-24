@@ -98,11 +98,11 @@ class MenuNavigation extends Component {
                     </SubMenu>
 
                     <SubMenu  title={<span><Icon type="setting"/><span>设置</span></span>}>
-                        <Menu.Item key="user">
-                            <NavLink to={`${urlPath}/user`}>
-                                <span>用户管理</span>
-                            </NavLink>
-                        </Menu.Item>
+                        {/*<Menu.Item key="user">*/}
+                            {/*<NavLink to={`${urlPath}/user`}>*/}
+                                {/*<span>用户管理</span>*/}
+                            {/*</NavLink>*/}
+                        {/*</Menu.Item>*/}
 
                         <Menu.Item key="upload">
                             <NavLink to={`${urlPath}/upload`}>

@@ -1,26 +1,11 @@
-import {Table, Icon, Divider, message, Button, Card, Breadcrumb} from 'antd';
+import {Table, Icon, Divider, message, Popconfirm, Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
-import AddProjectForm from "../components/AddProjectForm";
-import {doPost} from '../utils/HttpUtil';
-import {ADD_MANAGER} from '../utils/URL';
+import AddVersion from "../components/AddVersion";
+import EditVersion from "../components/EditVersion";
 
-// const data = [{
-//     key: '1',
-//     name: 'John Brown',
-//     age: 32,
-//     address: 'New York No. 1 Lake Park',
-// }, {
-//     key: '2',
-//     name: 'Jim Green',
-//     age: 42,
-//     address: 'London No. 1 Lake Park',
-// }, {
-//     key: '3',
-//     name: 'Joe Black',
-//     age: 32,
-//     address: 'Sidney No. 1 Lake Park',
-// }];
+import {doPost, requestParams} from '../utils/HttpUtil';
+import {ADD_MANAGER, DELETE_PROJECT, UPDATE_PROJECT} from '../utils/URL';
 
 /***
  * 版本管理
@@ -29,10 +14,19 @@ class VersionManage extends Component {
 
     state = {
         visible: false,
+        editVisible: false,
+        item:null,
     };
 
-    showCurRowMessage(record) {
-        alert("key:" + record.key + " name:" + record.name + " age:" + record.age + " address:" + record.address);
+
+    showCurRowMessage(item) {
+        this.setState({
+            editVisible: true,
+            item:item,
+        })
+
+        console.log("打印---",this.state.item)
+        // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
     }
 
     /*弹出对话框*/
@@ -40,6 +34,11 @@ class VersionManage extends Component {
         this.setState({
             visible: true
         })
+    };
+
+    deleteItem = (item) => {
+        alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
+
     };
 
     _saveFormRef = (formRef) => {
@@ -53,42 +52,74 @@ class VersionManage extends Component {
         })
     };
 
-    /*添加项目处理*/
+    _saveEditFormRef = (formRef) => {
+        this.editFormRef = formRef;
+    };
+
+    /*编辑完成后的处理*/
+    _handleEditCancel = () => {
+        this.editFormRef.props.form.resetFields();
+        this.setState({
+            editVisible: false,
+           // loading: false
+        })
+    };
+
+    /*编辑处理*/
+    _handleEdit = () => {
+        // this.setState({loading: true});
+        const form = this.editFormRef.props.form;
+        form.validateFields((err, values) => {
+            if (!err) {
+                let params = new Map();
+                params.set("projectId", this.state.item.id);
+                params.set("projectName", values.projectName);
+                params.set("projectCode", values.projectCode);
+                params.set("projectDes", values.projectDes);
+
+                console.log("打印请求参数：",params)
+                // doPost(UPDATE_PROJECT, requestParams(params))
+                //     .then(res => res.json())
+                //     .then(json => {
+                //         if (json.code === 1) {
+                //             message.success(json.msg);
+                //             this._loadProjectListData();
+                //         } else {
+                //             message.error(json.msg);
+                //         }
+                //         form.resetFields();
+                //         this.setState({
+                //             visible: false,
+                //         })
+                //     })
+                //     .catch(err => console.error(err));
+            }
+        });
+        form.resetFields();
+    };
+
+    /*添加教练*/
     _handleCreate = () => {
         const form = this.formRef.props.form;
         form.validateFields((err, values) => {
             if (!err) {
-                // let params = new Map();
-                // params.set("projectName", values.projectName);
-                // params.set("projectCode", values.projectCode);
-                // params.set("projectDes", values.projectDes);
-
                 let p = {};
                 p.account = values.projectName;
                 p.password = values.projectCode;
                 p.username = values.projectDes;
 
-                doPost(ADD_MANAGER, p)
-                    .then(res => {
-                        message.success("添加成功");
-                        form.resetFields();
-                        this.setState({
-                            visible: false,
-                        });
-                    })
-                    // .then(json => {
-                    //     message.success("添加成功");
-                    //     // this.props.onSuccess();
-                    //
-                    //     form.resetFields();
-                    //     this.setState({
-                    //         visible: false,
-                    //     });
-                    // })
-                    .catch(err => {
-                        console.error(err)
-                        message.error("添加失败")
-                    })
+                // doPost(ADD_MANAGER, p)
+                //     .then(res => {
+                //         message.success("添加成功");
+                //         form.resetFields();
+                //         this.setState({
+                //             visible: false,
+                //         });
+                //     })
+                //     .catch(err => {
+                //         console.error(err)
+                //         message.error("添加失败")
+                //     })
             }
         });
     };
@@ -97,42 +128,52 @@ class VersionManage extends Component {
         let self = this;
 
         const columns = [{
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            className: 'column-center',
+            title: '序号',
+            dataIndex: 'id',
+            key: 'id',
+        }, {
+            title: '下载链接',
+            dataIndex: 'edition_url',
+            key: 'edition_url',
             render: text => <a href="javascript:;">{text}</a>,
         }, {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        }, {
-            title: 'Address',
-            dataIndex: 'address',
+            title: '升级内容',
+            dataIndex: 'content',
             className: 'column-center',
-            key: 'address',
+            key: 'content',
+        }, {
+            title: '版本号',
+            dataIndex: 'edition_no',
+            key: 'edition_no',
+        }, {
+            title: '时间',
+            dataIndex: 'time',
+            key: 'time',
         }, {
             title: '操作',
             key: 'action',
-            render: (text, record) => (<span>
+            render: (text, item) => (<span>
       <a href="javascript:;" onClick={function () {
-          self.showCurRowMessage(record)
+          self.showCurRowMessage(item)
       }}>查看</a>
       <Divider type="vertical"/>
-      <a href="javascript:;">删除</a>
+                 <Popconfirm placement="left" title="确定要删除该版本记录么?" okText="确定" cancelText="取消" onConfirm={() => {
+                     this.deleteItem(item)
+                 }}>
+                 <a>删除</a></Popconfirm>
     </span>),
         }];
 
         const data = [];
-        for (let i = 0; i < 46; i++) {
+        for (let i = 0; i < 5; i++) {
             data.push({
-                key: i,
-                name: `Edward King ${i}`,
-                age: 32,
-                address: `London, Park Lane no. ${i}`,
+                id: i,
+                content: `升级内容. ${i}`,
+                edition_url: `htttp://www.baidu.com?/ ${i}`,
+                edition_no: 32,
+                time: `2018-7-. ${i}`,
             });
         }
-
 
         return (
             <div>
@@ -143,22 +184,29 @@ class VersionManage extends Component {
                     </Breadcrumb>
                 </div>
 
-                <Card title="升级记录"
+                <Card title="版本记录列表"
                       extra={<Button className="ant-layout-end" type="primary" onClick={this._showModal}>添加</Button>}
                       bordered={false}>
 
-                    <AddProjectForm
+                    <AddVersion
                         wrappedComponentRef={this._saveFormRef}
                         visible={this.state.visible}
                         onCancel={this._handleCancel}
-                        onCreate={this._handleCreate}
-                    />
+                        onCreate={this._handleCreate}/>
 
                     <Table columns={columns} dataSource={data}
                            pagination={{  //分页
                                pageSize: 15,  //显示几条一页
                            }}/>
                 </Card>
+
+                <EditVersion
+                    wrappedComponentRef={this._saveEditFormRef}
+                    visible={this.state.editVisible}
+                    item={this.state.item}
+                    onCancel={this._handleEditCancel}
+                    onCreate={this._handleEdit}
+                />
             </div>
         )
 

@@ -34,6 +34,12 @@ class DeviceManage extends Component {
         console.log("打印---", this.state.item)
     }
 
+    _showModal = () => {
+        this.setState({
+            visible: true
+        })
+    };
+
     deleteItem = (item) => {
         // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
     };
@@ -182,7 +188,7 @@ class DeviceManage extends Component {
                     </Breadcrumb>
                 </div>
 
-                <Card title="超级管理员列表"
+                <Card title="设备列表"
                       extra={<Button className="ant-layout-end" type="primary" onClick={this._showModal}>添加</Button>}
                       bordered={false}>
 

@@ -109,6 +109,9 @@ class AdManage extends Component {
                 p.username = values.projectDes;
 
                 console.log("ysq打印-", p)
+                this.setState({
+                    visible: false,
+                });
 
                 // doPost(ADD_MANAGER, p)
                 //     .then(res => {
