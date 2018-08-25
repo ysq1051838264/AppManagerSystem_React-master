@@ -28,36 +28,36 @@ class EditPlace extends Component {
                 title="编辑场地">
 
                 <Form>
-                    <FormItem label="场管名字">
+                    <FormItem label="场管名称">
                         {getFieldDecorator('projectName', {
                             initialValue: item.gym_name,
                             rules: [{
                                 required: true,
-                                message: '请输入场管名字'
+                                message: '请输入场管名称'
                             }]
                         })(
-                            <Input/>
+                            <Input disabled/>
                         )}
                     </FormItem>
 
-                    <FormItem label="设备名称">
+                    <FormItem label="场馆联系人">
                         {getFieldDecorator('projectCode', {
-                            initialValue: item.equip_name,
+                            initialValue: item.supervisor,
                             rules: [{
                                 required: true,
-                                message: '请输入设备名称'
+                                message: '请输入场馆联系人'
                             }]
                         })(
                             <Input />
                         )}
                     </FormItem>
 
-                    <FormItem label="超级管理员">
+                    <FormItem label="场馆地址">
                         {getFieldDecorator('projectDes', {
-                            initialValue: item.phone,
+                            initialValue: item.gym_address,
                             rules: [{
                                 required: true,
-                                message: '请输入超级管理员称'
+                                message: '请输入场馆地址'
                             }]
                         })(
                             <Input/>

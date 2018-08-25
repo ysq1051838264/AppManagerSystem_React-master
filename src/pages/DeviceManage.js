@@ -131,7 +131,7 @@ class DeviceManage extends Component {
         let self = this;
 
         const columns = [{
-            title: '序号',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id',
         }, {
@@ -149,6 +149,10 @@ class DeviceManage extends Component {
             dataIndex: 'num',
             key: 'num',
         }, {
+            title: '场馆名称',
+            dataIndex: 'gym_name',
+            key: 'gym_name',
+        }, {
             title: '注册时间',
             dataIndex: 'time',
             key: 'time',
@@ -158,7 +162,7 @@ class DeviceManage extends Component {
             render: (text, item) => (<span>
         <a href="javascript:;" onClick={function () {
             self.showCurRowMessage(item)
-        }}>查看</a>
+        }}>编辑</a>
       <Divider type="vertical"/>
                  <Popconfirm placement="left" title="确定要删除该设备么?" okText="确定" cancelText="取消" onConfirm={() => {
                      this.deleteItem(item)
@@ -173,6 +177,7 @@ class DeviceManage extends Component {
                 id: i,
                 equip_no: 188832806 + i,
                 equip_name: `设备名 ${i}`,
+                gym_name:'上海市镜湖区',
                 num:i ,
                 time: `2018-7-. ${i}`,
             });

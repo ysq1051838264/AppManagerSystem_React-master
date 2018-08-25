@@ -1,31 +1,27 @@
 import {Table, Icon, Divider, message, Popconfirm, Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
-import AddCoach from "../components/AddCoach";
-import EditCoach from "../components/EditCoach";
+import AddBracelet from "../components/AddBracelet";
+import EditBracelet from "../components/EditBracelet";
 
 import {doPost, requestParams} from '../utils/HttpUtil';
 import {ADD_MANAGER, DELETE_PROJECT, UPDATE_PROJECT} from '../utils/URL';
 
 /***
- * 教练管理
+ * 手环管理
  */
-class CoachManage extends Component {
+class BraceletManage extends Component {
 
     state = {
         visible: false,
         editVisible: false,
-        item:null,
+        current: 1,
+        item: null,
     };
 
     showCurRowMessage(item) {
-        this.setState({
-            editVisible: true,
-            item:item,
-        })
-
-        console.log("打印---",this.state.item)
-        // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
+        // 停用启用
+        alert("停用手环");
     }
 
     /*弹出对话框*/
@@ -36,8 +32,7 @@ class CoachManage extends Component {
     };
 
     deleteItem = (item) => {
-        alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
-
+        // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
     };
 
     _saveFormRef = (formRef) => {
@@ -60,7 +55,7 @@ class CoachManage extends Component {
         this.editFormRef.props.form.resetFields();
         this.setState({
             editVisible: false,
-           // loading: false
+            // loading: false
         })
     };
 
@@ -76,7 +71,7 @@ class CoachManage extends Component {
                 params.set("projectCode", values.projectCode);
                 params.set("projectDes", values.projectDes);
 
-                console.log("打印请求参数：",params)
+                console.log("打印请求参数：", params)
                 // doPost(UPDATE_PROJECT, requestParams(params))
                 //     .then(res => res.json())
                 //     .then(json => {
@@ -97,7 +92,7 @@ class CoachManage extends Component {
         form.resetFields();
     };
 
-    /*添加教练*/
+    /*添加手环*/
     _handleCreate = () => {
         const form = this.formRef.props.form;
         form.validateFields((err, values) => {
@@ -123,31 +118,46 @@ class CoachManage extends Component {
         });
     };
 
+    changePage = (page) => {
+
+        console.log("ysq的页面", page)
+        this.setState({
+            current: page,
+        }, () => {
+            // let param = JSON.parse(JSON.stringify(this.state.param))
+            // param = {
+            //     ...param,
+            //     pageNum: this.state.current,
+            //     pageSize: 10,
+            // }
+            // this.getActivityRestDetailList(param)
+        })
+    }
+
     render() {
         let self = this;
 
         const columns = [{
-            title: '序号',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id',
         }, {
-            title: '手机',
-            dataIndex: 'phone',
-            key: 'phone',
+            title: '设备编号',
+            dataIndex: 'equip_no',
+            key: 'equip_no',
             render: text => <a href="javascript:;">{text}</a>,
         }, {
-            title: '密码',
-            dataIndex: 'pwd',
-            className: 'column-center',
-            key: 'pwd',
+            title: '设备名称',
+            dataIndex: 'equip_name',
+            key: 'equip_name',
         }, {
-            title: '昵称',
-            dataIndex: 'nick_name',
-            key: 'nick_name',
+            title: '手环编号',
+            dataIndex: 'bracelet_no',
+            key: 'bracelet_no',
         }, {
-            title: '场管名称',
-            dataIndex: 'gym_name',
-            key: 'gym_name',
+            title: '手环名字',
+            dataIndex: 'name',
+            key: 'name',
         }, {
             title: '注册时间',
             dataIndex: 'time',
@@ -158,12 +168,13 @@ class CoachManage extends Component {
             render: (text, item) => (<span>
       <a href="javascript:;" onClick={function () {
           self.showCurRowMessage(item)
-      }}>编辑</a>
+      }}>停用</a>
       <Divider type="vertical"/>
-                 <Popconfirm placement="left" title="确定要删除该教练员么?" okText="确定" cancelText="取消" onConfirm={() => {
+                 <Popconfirm placement="left" title="确定要停用该手环么?" okText="确定" cancelText="取消" onConfirm={() => {
                      this.deleteItem(item)
                  }}>
-                 <a>删除</a></Popconfirm>
+                 <a>删除</a>
+                 </Popconfirm>
     </span>),
         }];
 
@@ -171,29 +182,28 @@ class CoachManage extends Component {
         for (let i = 0; i < 46; i++) {
             data.push({
                 id: i,
-                phone: 188832806 + i,
-                nick_name: `Edward King ${i}`,
-                pwd: 32,
-                gym_name:'上海市',
+                equip_no: 188832806 + i,
+                equip_name: `Edward King ${i}`,
+                bracelet_no: 32,
+                name: '上海市',
                 time: `2018-7-. ${i}`,
             });
         }
-
 
         return (
             <div>
                 <div className="ant-layout-breadcrumb">
                     <Breadcrumb>
                         <Breadcrumb.Item>管理</Breadcrumb.Item>
-                        <Breadcrumb.Item>教练管理</Breadcrumb.Item>
+                        <Breadcrumb.Item>手环管理</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
 
-                <Card title="超级管理员列表"
+                <Card title="手环列表"
                       extra={<Button className="ant-layout-end" type="primary" onClick={this._showModal}>添加</Button>}
                       bordered={false}>
 
-                    <AddCoach
+                    <AddBracelet
                         wrappedComponentRef={this._saveFormRef}
                         visible={this.state.visible}
                         onCancel={this._handleCancel}
@@ -202,20 +212,18 @@ class CoachManage extends Component {
                     <Table columns={columns} dataSource={data}
                            pagination={{  //分页
                                pageSize: 15,  //显示几条一页
+                           }}
+                           pagination={{  // 分页
+                               simple: true,
+                               current: this.state.current,
+                               total: 46,
+                               onChange: this.changePage,
                            }}/>
                 </Card>
-
-                <EditCoach
-                    wrappedComponentRef={this._saveEditFormRef}
-                    visible={this.state.editVisible}
-                    item={this.state.item}
-                    onCancel={this._handleEditCancel}
-                    onCreate={this._handleEdit}
-                />
             </div>
         )
 
     }
 }
 
-export default CoachManage;
+export default BraceletManage;

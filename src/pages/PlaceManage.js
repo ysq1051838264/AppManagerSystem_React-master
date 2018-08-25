@@ -102,7 +102,7 @@ class PlaceManage extends Component {
         form.resetFields();
     };
 
-    /*添加教练*/
+    /*添加场地*/
     _handleCreate = () => {
         const form = this.formRef.props.form;
         form.validateFields((err, values) => {
@@ -141,18 +141,13 @@ class PlaceManage extends Component {
             key: 'gym_name',
             render: text => <a href="javascript:;">{text}</a>,
         }, {
-            title: '设备名称',
-            dataIndex: 'equip_name',
+            title: '场馆联系人',
+            dataIndex: 'supervisor',
             className: 'column-center',
-            key: 'equip_name',
+            key: 'supervisor',
         }, {
-            title: '超级管理员',
-            dataIndex: 'phone',
-            key: 'phone',
-        } , {
-            title: '地址',
+            title: '场馆地址',
             dataIndex: 'gym_address',
-            className: 'column-center',
             key: 'gym_address',
         } , {
             title: '注册时间',
@@ -164,7 +159,7 @@ class PlaceManage extends Component {
             render: (text, item) => (<span>
        <a href="javascript:;" onClick={function () {
            self.showCurRowMessage(item)
-       }}>查看</a>
+       }}>编辑</a>
       <Divider type="vertical"/>
                  <Popconfirm placement="left" title="确定要删除该场地么?" okText="确定" cancelText="取消" onConfirm={() => {
                      this.deleteItem(item)
@@ -177,9 +172,8 @@ class PlaceManage extends Component {
         for (let i = 0; i < 4; i++) {
             data.push({
                 id: i,
-                phone:188832806+i,
-                gym_address: `Edward King ${i}`,
-                equip_name: `设备名 ${i}`,
+                supervisor:188832806+i,
+                gym_address: `上海市 ${i}`,
                 gym_name: `场馆名 ${i}`,
                 time: `2018-7-. ${i}`,
             });
@@ -191,11 +185,11 @@ class PlaceManage extends Component {
                 <div className="ant-layout-breadcrumb">
                     <Breadcrumb>
                         <Breadcrumb.Item>管理</Breadcrumb.Item>
-                        <Breadcrumb.Item>设备管理</Breadcrumb.Item>
+                        <Breadcrumb.Item>场馆管理</Breadcrumb.Item>
                     </Breadcrumb>
                 </div>
 
-                <Card title="场地列表"
+                <Card title="场馆列表"
                       extra={<Button className="ant-layout-end" type="primary" onClick={this._showModal}>添加</Button>}
                       bordered={false}>
 

@@ -27,60 +27,39 @@ class AddPlace extends Component {
                 onCancel={onCancel}
                 okText="添加"
                 cancelText="取消"
-                title="添加场地">
+                title="添加场馆">
 
                 <Form>
-                    <FormItem   {...formItemLayout} label="设备编号">
+                    <FormItem   {...formItemLayout} label="场馆名称">
                         {getFieldDecorator('projectName', {
                             rules: [{
                                 required: true,
-                                message: '请输入设备编号',
+                                message: '请输入场馆名称',
                             }],
                         })(
                             <Input/>
                         )}
                     </FormItem>
 
-                    <FormItem  {...formItemLayout} label="设备名称">
+                    <FormItem  {...formItemLayout} label="场馆联系人">
                         {getFieldDecorator('projectCode', {
                             rules: [{
                                 required: true,
-                                message: '请输入设备名称',
+                                message: '请输入场馆联系人',
                             }],
                         })(
                             <Input/>
                         )}
                     </FormItem>
 
-                    <FormItem
-                        {...formItemLayout}
-                        label="选择设备"
-                        hasFeedback>
-                        {getFieldDecorator('projectDes', {
-                            rules: [
-                                {required: true, message: '请选择设备'},
-                            ],
+                    <FormItem  {...formItemLayout} label="场馆地址">
+                        {getFieldDecorator('projectCode', {
+                            rules: [{
+                                required: true,
+                                message: '请输入场馆地址',
+                            }],
                         })(
-                            <Select placeholder="请选择设备">
-                                <Option value="1号">1号</Option>
-                                <Option value="2号">2号</Option>
-                            </Select>
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="选择教练"
-                        hasFeedback>
-                        {getFieldDecorator('projectDes', {
-                            rules: [
-                                {required: true, message: '请选择教练'},
-                            ],
-                        })(
-                            <Select placeholder="请选择教练">
-                                <Option value="1">阳教练</Option>
-                                <Option value="2">毛教练</Option>
-                            </Select>
+                            <Input/>
                         )}
                     </FormItem>
 
@@ -112,7 +91,7 @@ class AddPlace extends Component {
                         {getFieldDecorator('address', {
                             rules: [{
                                 required: false,
-                                message: '请公司注册地址',
+                                message: '请输入公司注册地址',
                             }],
                         })(
                             <Input/>

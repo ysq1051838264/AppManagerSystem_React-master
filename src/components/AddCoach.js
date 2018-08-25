@@ -3,9 +3,10 @@
  * Created by yangshuquan on 2018/8/12.
  */
 import React, {Component} from 'react';
-import {Modal, Form, Input} from 'antd';
+import {Modal, Form, Select,Input} from 'antd';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 class AddCoach extends Component {
 
@@ -20,6 +21,20 @@ class AddCoach extends Component {
                 okText="添加"
                 cancelText="取消"
                 title="添加超级管理员">
+
+                <FormItem
+                    label="请选择场地">
+                    {getFieldDecorator('place', {
+                        rules: [
+                            {required: true, message: '请选择场地'},
+                        ],
+                    })(
+                        <Select placeholder="请选择场地">
+                            <Option value="1号">1号</Option>
+                            <Option value="2号">2号</Option>
+                        </Select>
+                    )}
+                </FormItem>
 
                 <Form>
                     <FormItem label="手机号码">
@@ -55,6 +70,8 @@ class AddCoach extends Component {
                             <Input/>
                         )}
                     </FormItem>
+
+
                 </Form>
             </Modal>
         );

@@ -1,5 +1,5 @@
 /**
- * 修改超级管理员教练资料
+ * 修改手环
  *
  */
 import React, {Component} from 'react';
@@ -9,7 +9,7 @@ import {UPLOAD_ICON} from '../utils/URL';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-class EditCoach extends Component {
+class EditBracelet extends Component {
 
     render() {
         const {visible, onCancel, onCreate, form, item} = this.props;
@@ -66,20 +66,7 @@ class EditCoach extends Component {
                         )}
                     </FormItem>
 
-                    <FormItem
-                        label="请选择场地">
-                        {getFieldDecorator('place', {
-                            initialValue: item.gym_name,
-                            rules: [
-                                {required: true, message: '请选择场地'},
-                            ],
-                        })(
-                            <Select placeholder="请选择场地">
-                                <Option value="1号">1号</Option>
-                                <Option value="2号">2号</Option>
-                            </Select>
-                        )}
-                    </FormItem>
+
 
                 </Form>
             </Modal>
@@ -87,5 +74,5 @@ class EditCoach extends Component {
     }
 }
 
-const editForm = Form.create()(EditCoach);
+const editForm = Form.create()(EditBracelet);
 export default editForm;

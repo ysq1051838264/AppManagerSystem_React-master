@@ -14,14 +14,15 @@ import CoachManage from "../pages/CoachManage";
 import DeviceManage from "../pages/DeviceManage";
 import AdManage from "../pages/AdManage";
 import PlaceManage from "../pages/PlaceManage";
+import BraceletManage from "../pages/BraceletManage";
 
 class NavRouter extends Component {
 
     /*判断页面是否存在*/
     _handleViewVisible = (page) => {
-        return page === 'projectList' || page === 'android' || page === 'ios'
+        return page === 'projectList' || page === 'android' || page === 'game'
             || page === 'releaseVersion' || page === 'dataStatistics' || page === 'user' || page === 'upload'
-            || page === 'device' || page === 'coach' || page === 'place' || page === 'ad';
+            || page === 'device' || page === 'coach' || page === 'place' || page === 'ad' || page === 'bracelet';
     };
 
     /*返回对应的页面*/
@@ -38,6 +39,8 @@ class NavRouter extends Component {
             return <UserManagePage/>;
         } else if (page === 'upload') {
             return <VersionManage/>;
+        } else if (page === 'game') {
+            return <VersionManage/>;
         } else if (page === 'device') {
             return <DeviceManage/>;
         } else if (page === 'coach') {
@@ -46,6 +49,8 @@ class NavRouter extends Component {
             return <PlaceManage/>;
         } else if (page === 'ad') {
             return <AdManage/>;
+        } else if (page === 'bracelet') {
+            return <BraceletManage/>;
         }
     };
 

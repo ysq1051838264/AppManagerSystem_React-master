@@ -3,11 +3,11 @@
  *
  */
 import React, {Component} from 'react';
-import {Modal, Form, Input, Upload, Icon, message, Button} from 'antd';
+import {Modal, Form, Input,Select, Upload, Icon, message, Button} from 'antd';
 import {UPLOAD_ICON} from '../utils/URL';
 
 const FormItem = Form.Item;
-
+const Option = Select.Option;
 
 class EditDevice extends Component {
 
@@ -61,6 +61,21 @@ class EditDevice extends Component {
                             }]
                         })(
                             <Input/>
+                        )}
+                    </FormItem>
+
+                    <FormItem
+                        label="请选择场地">
+                        {getFieldDecorator('place', {
+                            initialValue: item.equip_name,
+                            rules: [
+                                {required: true, message: '请选择场地'},
+                            ],
+                        })(
+                            <Select placeholder="请选择场地">
+                                <Option value="1号">1号</Option>
+                                <Option value="2号">2号</Option>
+                            </Select>
                         )}
                     </FormItem>
 
