@@ -38,7 +38,7 @@ class AddBracelet extends Component {
                         )}
                     </FormItem>
 
-                    <FormItem label="请输入手环编号">
+                    <FormItem label="手环编号(不能修改)">
                         {getFieldDecorator('bracelet_no', {
                             rules: [{
                                 required: true,
@@ -49,7 +49,7 @@ class AddBracelet extends Component {
                         )}
                     </FormItem>
 
-                    <FormItem label="请输入手环名字">
+                    <FormItem label="手环名字">
                         {getFieldDecorator('bracelet_name', {
                             rules: [{
                                 required: true,

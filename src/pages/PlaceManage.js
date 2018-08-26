@@ -1,48 +1,79 @@
-import {Table, Icon, Divider, message,Popconfirm, Button, Card, Breadcrumb} from 'antd';
+import {Table, message, Popconfirm, Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
+import {getTimes} from '../utils/DateUtil';
 import AddPlace from "../components/AddPlace";
 import EditPlace from "../components/EditPlace";
-import {doPost} from '../utils/HttpUtil';
-import {ADD_MANAGER} from '../utils/URL';
+import {doGet, doPost, doURLGet} from '../utils/HttpUtil';
+import {GET_PLACE, PLACE_INFO, QUERY_PLACE_INFO} from '../utils/URL';
+
 /***
  * 场地管理
  */
 class PlaceManage extends Component {
 // 构造
-  constructor(props) {
-    super(props);
-    // 初始状态
-    this.state = {
-        visible: false,
-        editVisible: false,
-        item:null,
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+            total: 0,
+            current: 1,
+            visible: false,
+            editVisible: false,
+            item: null,
+        };
+    }
 
-    // state = {
-    //     visible: false,
-    //     editVisible: false,
-    //     item:null,
-    // };
+    componentWillMount() {
+        this.getData();
+    }
+
+    getData() {
+        let p = {};
+        p.page = this.state.current;
+        p.limit = 5;
+        doGet(GET_PLACE, p)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    data: json.items,
+                    total: json.total
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                message.error("没有数据")
+            })
+    }
+
+    changePage = (page) => {
+        console.log("ysq的页面", page)
+        this.setState({
+            current: page,
+        }, () => {
+            this.getData();
+        })
+    }
 
     showCurRowMessage(item) {
-        this.setState({
-            editVisible: true,
-            item:item,
-        })
-
-        console.log("打印---",this.state.item)
+        doURLGet(QUERY_PLACE_INFO + '/' + item.id)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    editVisible: true,
+                    item: json,
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                message.error("没有数据")
+            })
     }
 
     _showModal = () => {
         this.setState({
             visible: true
         })
-    };
-
-    deleteItem = (item) => {
-        // alert("序列:" + item.id + " 手机:" + item.phone + " 密码:" + item.pwd + " 昵称:" + item.nick_name);
     };
 
     _saveFormRef = (formRef) => {
@@ -75,28 +106,27 @@ class PlaceManage extends Component {
         const form = this.editFormRef.props.form;
         form.validateFields((err, values) => {
             if (!err) {
-                let params = new Map();
-                params.set("projectId", this.state.item.id);
-                params.set("projectName", values.projectName);
-                params.set("projectCode", values.projectCode);
-                params.set("projectDes", values.projectDes);
+                let p = {};
+                p = values;
+                p.id = this.state.item.id;
 
-                console.log("打印请求参数：",params)
-                // doPost(UPDATE_PROJECT, requestParams(params))
-                //     .then(res => res.json())
-                //     .then(json => {
-                //         if (json.code === 1) {
-                //             message.success(json.msg);
-                //             this._loadProjectListData();
-                //         } else {
-                //             message.error(json.msg);
-                //         }
-                //         form.resetFields();
-                //         this.setState({
-                //             visible: false,
-                //         })
-                //     })
-                //     .catch(err => console.error(err));
+                console.log("请求参数：", p);
+
+                doPost(PLACE_INFO, p)
+                    .then(res => {
+                        message.success("修改成功");
+                        this.getData();
+                        form.resetFields();
+                        this.setState({
+                            editVisible: false,
+                        });
+                    })
+                    .catch(err => {
+                        message.error("修改失败，请检查是否场地已经存在")
+                        this.setState({
+                            editVisible: false,
+                        });
+                    })
             }
         });
         form.resetFields();
@@ -108,22 +138,21 @@ class PlaceManage extends Component {
         form.validateFields((err, values) => {
             if (!err) {
                 let p = {};
-                p.account = values.projectName;
-                p.password = values.projectCode;
-                p.username = values.projectDes;
+                p = values;
 
-                // doPost(ADD_MANAGER, p)
-                //     .then(res => {
-                //         message.success("添加成功");
-                //         form.resetFields();
-                //         this.setState({
-                //             visible: false,
-                //         });
-                //     })
-                //     .catch(err => {
-                //         console.error(err)
-                //         message.error("添加失败")
-                //     })
+                console.log("请求参数：", p);
+
+                doPost(PLACE_INFO, p)
+                    .then(res => {
+                        message.success("添加成功");
+                        form.resetFields();
+                        this.setState({
+                            visible: false,
+                        });
+                    })
+                    .catch(err => {
+                        message.error("添加失败，请检查是否场地已经存在")
+                    })
             }
         });
     };
@@ -143,41 +172,25 @@ class PlaceManage extends Component {
         }, {
             title: '场馆联系人',
             dataIndex: 'supervisor',
-            className: 'column-center',
             key: 'supervisor',
         }, {
             title: '场馆地址',
             dataIndex: 'gym_address',
             key: 'gym_address',
-        } , {
+        }, {
             title: '注册时间',
-            dataIndex: 'time',
-            key: 'time',
-        },{
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: text => <a>{getTimes(text)}</a>,
+        }, {
             title: '操作',
             key: 'action',
             render: (text, item) => (<span>
        <a href="javascript:;" onClick={function () {
            self.showCurRowMessage(item)
        }}>编辑</a>
-      <Divider type="vertical"/>
-                 <Popconfirm placement="left" title="确定要删除该场地么?" okText="确定" cancelText="取消" onConfirm={() => {
-                     this.deleteItem(item)
-                 }}>
-                 <a>删除</a></Popconfirm>
     </span>),
         }];
-
-        const data = [];
-        for (let i = 0; i < 4; i++) {
-            data.push({
-                id: i,
-                supervisor:188832806+i,
-                gym_address: `上海市 ${i}`,
-                gym_name: `场馆名 ${i}`,
-                time: `2018-7-. ${i}`,
-            });
-        }
 
 
         return (
@@ -200,9 +213,12 @@ class PlaceManage extends Component {
                         onCreate={this._handleCreate}
                     />
 
-                    <Table columns={columns} dataSource={data}
+                    <Table dataSource={this.state.data} columns={columns}
                            pagination={{  //分页
-                               pageSize: 15,  //显示几条一页
+                               pageSize: 5,  //显示几条一页
+                               current: this.state.current,
+                               total: this.state.total,
+                               onChange: this.changePage,
                            }}/>
                 </Card>
 

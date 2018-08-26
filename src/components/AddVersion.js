@@ -22,7 +22,7 @@ class AddVersion extends Component {
                 title="添加版本">
 
                 <Form>
-                    <FormItem label="版本号">
+                    <FormItem label="版本号(不可修改)">
                         {getFieldDecorator('projectName', {
                             rules: [{
                                 required: true,

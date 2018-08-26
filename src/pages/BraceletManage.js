@@ -155,10 +155,6 @@ class BraceletManage extends Component {
             dataIndex: 'bracelet_no',
             key: 'bracelet_no',
         }, {
-            title: '手环名字',
-            dataIndex: 'name',
-            key: 'name',
-        }, {
             title: '注册时间',
             dataIndex: 'time',
             key: 'time',
@@ -210,11 +206,8 @@ class BraceletManage extends Component {
                         onCreate={this._handleCreate}/>
 
                     <Table columns={columns} dataSource={data}
-                           pagination={{  //分页
-                               pageSize: 15,  //显示几条一页
-                           }}
                            pagination={{  // 分页
-                               simple: true,
+                               pageSize: 15,
                                current: this.state.current,
                                total: 46,
                                onChange: this.changePage,

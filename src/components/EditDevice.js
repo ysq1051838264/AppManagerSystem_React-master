@@ -4,12 +4,37 @@
  */
 import React, {Component} from 'react';
 import {Modal, Form, Input,Select, Upload, Icon, message, Button} from 'antd';
-import {UPLOAD_ICON} from '../utils/URL';
+import {GET_PLACE, QUERY_ALL_PLACE_INFO} from '../utils/URL';
+import {doGet, doPost, doURLGet} from '../utils/HttpUtil';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 class EditDevice extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [],
+        };
+    }
+
+    componentWillMount() {
+        let p = {};
+        // p.page = this.state.current;
+        // p.limit = 5;
+        doGet(QUERY_ALL_PLACE_INFO, null)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    data: json.items,
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                message.error("没有数据")
+            })
+    }
 
     render() {
         const {visible, onCancel, onCreate, form, item} = this.props;
@@ -28,6 +53,7 @@ class EditDevice extends Component {
                 title="编辑设备">
 
                 <Form>
+
                     <FormItem label="设备编号">
                         {getFieldDecorator('projectName', {
                             initialValue: item.equip_no,
@@ -36,31 +62,7 @@ class EditDevice extends Component {
                                 message: '请输入设备编号'
                             }]
                         })(
-                            <Input/>
-                        )}
-                    </FormItem>
-
-                    <FormItem label="设备名称">
-                        {getFieldDecorator('projectCode', {
-                            initialValue: item.equip_name,
-                            rules: [{
-                                required: true,
-                                message: '请输入设备名称'
-                            }]
-                        })(
-                            <Input />
-                        )}
-                    </FormItem>
-
-                    <FormItem label="手环个数">
-                        {getFieldDecorator('projectDes', {
-                            initialValue: item.num,
-                            rules: [{
-                                required: true,
-                                message: '请输入手环个数'
-                            }]
-                        })(
-                            <Input/>
+                            <Input disabled/>
                         )}
                     </FormItem>
 
@@ -79,6 +81,17 @@ class EditDevice extends Component {
                         )}
                     </FormItem>
 
+                    <FormItem label="设备名称">
+                        {getFieldDecorator('projectCode', {
+                            initialValue: item.equip_name,
+                            rules: [{
+                                required: true,
+                                message: '请输入设备名称'
+                            }]
+                        })(
+                            <Input />
+                        )}
+                    </FormItem>
 
                 </Form>
             </Modal>

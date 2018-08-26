@@ -36,7 +36,7 @@ class EditVersion extends Component {
                                     message: '请输入版本号'
                                 }]
                             })(
-                                <Input/>
+                                <Input disabled/>
                             )}
                         </FormItem>
 

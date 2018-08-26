@@ -30,8 +30,8 @@ class AddPlace extends Component {
                 title="添加场馆">
 
                 <Form>
-                    <FormItem   {...formItemLayout} label="场馆名称">
-                        {getFieldDecorator('projectName', {
+                    <FormItem   {...formItemLayout} label="场馆名称(不能修改)">
+                        {getFieldDecorator('gym_name', {
                             rules: [{
                                 required: true,
                                 message: '请输入场馆名称',
@@ -42,7 +42,7 @@ class AddPlace extends Component {
                     </FormItem>
 
                     <FormItem  {...formItemLayout} label="场馆联系人">
-                        {getFieldDecorator('projectCode', {
+                        {getFieldDecorator('supervisor', {
                             rules: [{
                                 required: true,
                                 message: '请输入场馆联系人',
@@ -53,7 +53,7 @@ class AddPlace extends Component {
                     </FormItem>
 
                     <FormItem  {...formItemLayout} label="场馆地址">
-                        {getFieldDecorator('projectCode', {
+                        {getFieldDecorator('gym_address', {
                             rules: [{
                                 required: true,
                                 message: '请输入场馆地址',

@@ -1,28 +1,58 @@
-import {Table, Icon, Divider, message, Popconfirm,Button, Card, Breadcrumb} from 'antd';
+import {Table, Icon, Divider, message, Popconfirm, Button, Card, Breadcrumb} from 'antd';
 import '../css/Home.css';
 import React, {Component} from 'react';
 import AddDevice from "../components/AddDevice";
 import EditDevice from "../components/EditDevice";
-import {doPost} from '../utils/HttpUtil';
-import {ADD_MANAGER} from '../utils/URL';
+import {doGet, doPost} from '../utils/HttpUtil';
+import {DEVICE_LIST, ADD_DEVICE} from '../utils/URL';
 
 /***
  * 设备管理
  */
 class DeviceManage extends Component {
-  // 构造
+    // 构造
     constructor(props) {
-      super(props);
-      // 初始状态
-      this.state = {
-          visible: false,
-          editVisible: false,
-          item: null,
-      };
+        super(props);
+        // 初始状态
+        this.state = {
+            data: [],
+            total: 0,
+            current: 1,
+            visible: false,
+            editVisible: false,
+            item: null,
+        };
     }
 
     componentWillMount() {
-        //初始化data
+        this.getData();
+    }
+
+    getData() {
+        let p = {};
+        p.page = this.state.current;
+        p.limit = 5;
+        doGet(DEVICE_LIST, p)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    data: json.items,
+                    total: json.total
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                message.error("没有数据")
+            })
+    }
+
+    changePage = (page) => {
+        console.log("ysq的页面", page)
+        this.setState({
+            current: page,
+        }, () => {
+            this.getData();
+        })
     }
 
     showCurRowMessage(item) {
@@ -101,28 +131,27 @@ class DeviceManage extends Component {
         form.resetFields();
     };
 
-    /*添加教练*/
+    /*添加设备*/
     _handleCreate = () => {
         const form = this.formRef.props.form;
         form.validateFields((err, values) => {
             if (!err) {
                 let p = {};
-                p.account = values.projectName;
-                p.password = values.projectCode;
-                p.username = values.projectDes;
+                p = values;
 
-                // doPost(ADD_MANAGER, p)
-                //     .then(res => {
-                //         message.success("添加成功");
-                //         form.resetFields();
-                //         this.setState({
-                //             visible: false,
-                //         });
-                //     })
-                //     .catch(err => {
-                //         console.error(err)
-                //         message.error("添加失败")
-                //     })
+                console.log("请求参数：", p);
+
+                doPost(ADD_DEVICE, p)
+                    .then(res => {
+                        message.success("添加成功");
+                        form.resetFields();
+                        this.setState({
+                            visible: false,
+                        });
+                    })
+                    .catch(err => {
+                        message.error("添加失败，请检查设备编号是否已经存在")
+                    })
             }
         });
     };
@@ -145,10 +174,6 @@ class DeviceManage extends Component {
             className: 'column-center',
             key: 'equip_name',
         }, {
-            title: '手环个数',
-            dataIndex: 'num',
-            key: 'num',
-        }, {
             title: '场馆名称',
             dataIndex: 'gym_name',
             key: 'gym_name',
@@ -164,24 +189,12 @@ class DeviceManage extends Component {
             self.showCurRowMessage(item)
         }}>编辑</a>
       <Divider type="vertical"/>
-                 <Popconfirm placement="left" title="确定要删除该设备么?" okText="确定" cancelText="取消" onConfirm={() => {
+                 <Popconfirm placement="left" title="确定要停用该设备么?" okText="确定" cancelText="取消" onConfirm={() => {
                      this.deleteItem(item)
                  }}>
-                 <a>删除</a></Popconfirm>
+                 <a>停用</a></Popconfirm>
     </span>),
         }];
-
-        const data = [];
-        for (let i = 0; i < 10; i++) {
-            data.push({
-                id: i,
-                equip_no: 188832806 + i,
-                equip_name: `设备名 ${i}`,
-                gym_name:'上海市镜湖区',
-                num:i ,
-                time: `2018-7-. ${i}`,
-            });
-        }
 
 
         return (
@@ -204,9 +217,12 @@ class DeviceManage extends Component {
                         onCreate={this._handleCreate}
                     />
 
-                    <Table columns={columns} dataSource={data}
+                    <Table columns={columns} dataSource={this.state.data}
                            pagination={{  //分页
-                               pageSize: 15,  //显示几条一页
+                               pageSize: 5,  //显示几条一页
+                               current: this.state.current,
+                               total: this.state.total,
+                               onChange: this.changePage,
                            }}/>
                 </Card>
 
