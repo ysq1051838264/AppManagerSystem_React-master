@@ -2,6 +2,11 @@
  * 网络请求URL
  * Created by panyz on 2018/6/8.
  */
+
+// 接口地址
+// http://47.97.188.168:8080/fifozone/swagger-ui.html#/
+// http://192.168.43.25:8080/swagger-ui.html
+
 const BASE_URL = "http://192.168.43.25:8080/fifo/admin/";
 
 export const LOGIN = BASE_URL + "sign";//登录接口
@@ -17,11 +22,8 @@ export const QUERY_PLACE_INFO = BASE_URL + "gym/gym";//根据id查询信息
 export const QUERY_ALL_PLACE_INFO = BASE_URL + "gym/detail";//查询所有场馆id和名字信息
 
 export const ADD_DEVICE = BASE_URL + "equip/info";//添加设备信息
+
 export const DEVICE_LIST = BASE_URL + "equip/page";//获取设备列表
-
-
-
-
 
 
 export const GET_ALL_PROJECT = BASE_URL + "projectList/getAllProject";//获取项目接口
